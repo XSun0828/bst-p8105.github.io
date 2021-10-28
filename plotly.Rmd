@@ -1,11 +1,11 @@
 ---
-title: "About"
+title: "Plotly"
 output: 
   html_document:
     toc: true
     toc_float: true
 ---
 
-This website is about how coll the internet is!!
+This website is about making some plotly examples.
 
 Here's back to the [index](index.html) page.
