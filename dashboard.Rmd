@@ -1,14 +1,14 @@
 ---
-title: "Plotly"
+title: "Dashboard"
 output: 
-  html_document:
-    toc: true
-    toc_float: true
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+    source_code: embed
 ---
 
-This website is about making some plotly examples.
-
-```{r}
+```{r setup, include=FALSE}
+library(flexdashboard)
 library(tidyverse)
 library(p8105.datasets)
 
@@ -32,9 +32,10 @@ nyc_airbnb =
   drop_na(stars)
 ```
 
-## Make a scatterplot
+Column {data-width=650}
+-----------------------------------------------------------------------
 
-Here's a plotly scatterplot!
+### Chart A
 
 ```{r}
 nyc_airbnb %>% 
@@ -47,7 +48,10 @@ nyc_airbnb %>%
   )
 ```
 
-## Plotly boxplot
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Chart B
 
 ```{r}
 nyc_airbnb %>% 
@@ -57,7 +61,7 @@ nyc_airbnb %>%
   plot_ly(y = ~price, color = ~neighbourhood, type = "box", colors = "viridis")
 ```
 
-Here comes a bar chart ...
+### Chart C
 
 ```{r}
 nyc_airbnb %>% 
@@ -66,17 +70,5 @@ nyc_airbnb %>%
     neighbourhood = fct_reorder(neighbourhood, n)
     ) %>% 
   plot_ly(x = ~neighbourhood, y = ~n, color = ~neighbourhood, type = "bar", colors = "viridis")
-```
-
-
-## ggplotly
-
-```{r}
-gg_lat_long = 
-  nyc_airbnb %>% 
-  ggplot(aes(x = lat, y = long, color = price)) +
-  geom_point()
-
-ggplotly(gg_lat_long)
 ```
 
