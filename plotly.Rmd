@@ -8,4 +8,42 @@ output:
 
 This website is about making some plotly examples.
 
-Here's back to the [index](index.html) page.
+```{r}
+library(tidyverse)
+library(p8105.datasets)
+
+library(plotly)
+```
+
+Lets' look at the NYC airbnb data
+
+```{r}
+data("nyc_airbnb")
+
+nyc_airbnb = 
+  nyc_airbnb %>% 
+  mutate(stars = review_scores_location / 2) %>% 
+  select(neighbourhood_group, neighbourhood, stars, price, room_type, lat, long) %>% 
+  filter(
+    neighbourhood_group == "Manhattan",
+    room_type == "Entire home/apt",
+    price %in% 100:500
+    ) %>% 
+  drop_na(stars)
+```
+
+## Make a scatterplot
+
+Here's a plotly scatterplot!
+
+```{r}
+nyc_airbnb %>% 
+  mutate(
+    text_label = str_c("Price: $", price, "\nRating: ", stars)
+  ) %>% 
+  plot_ly(
+    x = ~lat, y = ~long, type = "scatter", mode = "markers",
+    color = ~price, text = ~text_label, alpha = .5
+  )
+```
+
